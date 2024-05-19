@@ -56,11 +56,11 @@ namespace OnlineRandevuSystemApp
                         messageBoxContent = "Kullanıcı bulunamadı.";
                     }
 
-                    MessageBox.Show(messageBoxContent);
+                    MessageBox.Show(messageBoxContent, "UYARI", MessageBoxButtons.OK);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"API isteği sırasında bir hata oluştu: {ex.Message}");
+                    MessageBox.Show($"API isteği sırasında bir hata oluştu: {ex.Message}", "DİKKAT", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 return response;
             }
@@ -81,12 +81,12 @@ namespace OnlineRandevuSystemApp
 
                     if (response.Data == null || response.Data.Count == 0)
                     {
-                        MessageBox.Show("Kullanıcı bilgileri veritabanında bulunamadı.");
+                        MessageBox.Show("Kullanıcı bilgileri veritabanında bulunamadı.", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"API isteği sırasında bir hata oluştu: {ex.Message}");
+                    MessageBox.Show($"API isteği sırasında bir hata oluştu: {ex.Message}", "DİKKAT", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 return response;
             }
@@ -114,7 +114,7 @@ namespace OnlineRandevuSystemApp
 
                     if (isLoginSuccessful)
                     {
-                        MessageBox.Show("Kullanıcı Girişi Başarılı");
+                        MessageBox.Show("Kullanıcı Girişi Başarılı", "BAŞARILI", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                         MainMenuForm frm = new MainMenuForm(userData);
                         frm.FormClosed += (s, args) => this.Show();
                         this.Hide();
@@ -122,19 +122,19 @@ namespace OnlineRandevuSystemApp
                     }
                     else
                     {
-                        MessageBox.Show("Kullanıcı Email veya Şifre Hatalıdır!..");
+                        MessageBox.Show("Kullanıcı Email veya Şifre Hatalıdır!..", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                     this.txtEmail.Text = null;
                     this.txtPassword.Text = null;
                 }
                 else
                 {
-                    MessageBox.Show("Kullanıcı Bilgileri Bulunmamaktadır. (Veritabanında Kullanıcı Kaydı Bulunmamaktadır!..)");
+                    MessageBox.Show("Kullanıcı Bilgileri Bulunmamaktadır. (Veritabanında Kullanıcı Kaydı Bulunmamaktadır!..)", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Giriş işlemi sırasında hata oluştu: {ex.Message}");
+                MessageBox.Show($"Giriş işlemi sırasında hata oluştu: {ex.Message}", "DİKKAT", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

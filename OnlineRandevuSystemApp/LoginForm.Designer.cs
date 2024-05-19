@@ -111,6 +111,7 @@
             this.Controls.Add(this.txtEmail);
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.btnGetUsers);
+            this.MaximizeBox = false;
             this.Name = "LoginForm";
             this.Text = "Online Randevu Sistemi Giriş Ekranı";
             this.ResumeLayout(false);
