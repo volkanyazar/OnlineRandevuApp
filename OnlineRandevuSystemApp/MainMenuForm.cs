@@ -23,10 +23,8 @@ namespace OnlineRandevuSystemApp
 
         private void OnStartForm()
         {
-            UndoMenuEffects();
-            ActiveMenuEffect(hakkımızdaToolStripMenuItem);
-            ToggleOnSelectedPanel(panel3);
             this.lblWelcome.Text = $"Hoş Geldiniz, {_user.FirstName} {_user.LastName}";
+            this.label3.Text = "Lorem Ipsum is simply dummy text of the \nprinting and typesetting industry. \nLorem Ipsum has been the industry's standard \ndummy text ever since the 1500s, \nwhen an unknown printer took a galley of type and scrambled it to make a type specimen book. \nIt has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. \nIt was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, \nand more recently with desktop \npublishing software like Aldus PageMaker \nincluding versions of Lorem Ipsum";
         }
 
         private void MainMenuForm_Load(object sender, EventArgs e)
@@ -103,68 +101,6 @@ namespace OnlineRandevuSystemApp
             dataGridView1.DataSource = dataTable;
         }
 
-        private void hakkımızdaToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            UndoMenuEffects();
-            ActiveMenuEffect(hakkımızdaToolStripMenuItem);
-            ToggleOnSelectedPanel(panel3);
-        }
-
-        private void randevularımToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            UndoMenuEffects();
-            ActiveMenuEffect(randevularımToolStripMenuItem);
-            ToggleOnSelectedPanel(panel1);
-        }
-
-        private void departmanlarToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            UndoMenuEffects();
-            ActiveMenuEffect(departmanlarToolStripMenuItem);
-            ToggleOnSelectedPanel(panel4);
-        }
-
-        private void doktorlarToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            UndoMenuEffects();
-            ActiveMenuEffect(doktorlarToolStripMenuItem);
-            ToggleOnSelectedPanel(panel5);
-        }
-
-        private void iletişimToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            UndoMenuEffects();
-            ActiveMenuEffect(iletişimToolStripMenuItem);
-            ToggleOnSelectedPanel(panel6);
-        }
-
-        private void sSSToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            UndoMenuEffects();
-            ActiveMenuEffect(sSSToolStripMenuItem);
-            ToggleOnSelectedPanel(panel7);
-        }
-
-        private void ToggleOnSelectedPanel(Panel panel)
-        {
-            var panelItems = new List<Panel>()
-            {
-                panel1,
-                panel3,
-                panel4,
-                panel5,
-                panel6,
-                panel7
-            };
-
-            foreach (var pnl in panelItems)
-            {
-                pnl.Visible = false;
-            }
-
-            panel.Visible = true;
-        }
-
         private void ActiveMenuEffect(ToolStripMenuItem menuItem)
         {
             menuItem.ForeColor = Color.Red;
@@ -173,20 +109,20 @@ namespace OnlineRandevuSystemApp
 
         private void UndoMenuEffects()
         {
-            var menuItems = new List<ToolStripMenuItem>()
-            {
-                hakkımızdaToolStripMenuItem,
-                doktorlarToolStripMenuItem,
-                iletişimToolStripMenuItem,
-                departmanlarToolStripMenuItem,
-                randevularımToolStripMenuItem,
-                sSSToolStripMenuItem
-            };
-            foreach (var menu in menuItems)
-            {
-                menu.ForeColor = Color.DarkBlue;
-                menu.BackColor = Color.Pink;
-            }
+            //var menuItems = new List<ToolStripMenuItem>()
+            //{
+            //    hakkımızdaToolStripMenuItem,
+            //    doktorlarToolStripMenuItem,
+            //    iletişimToolStripMenuItem,
+            //    departmanlarToolStripMenuItem,
+            //    randevularımToolStripMenuItem,
+            //    sSSToolStripMenuItem
+            //};
+            //foreach (var menu in menuItems)
+            //{
+            //    menu.ForeColor = Color.DarkBlue;
+            //    menu.BackColor = Color.Pink;
+            //}
         }
     }
 }
