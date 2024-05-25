@@ -34,24 +34,30 @@
             this.label2 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.hakkımızdaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.iletişimToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.doktorlarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.randevularımToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.departmanlarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.doktorlarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.iletişimToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sSSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStrip2 = new System.Windows.Forms.MenuStrip();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.panel7 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.menuStrip2.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblWelcome
             // 
             this.lblWelcome.AutoSize = true;
             this.lblWelcome.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblWelcome.Location = new System.Drawing.Point(40, 60);
+            this.lblWelcome.Location = new System.Drawing.Point(12, 29);
             this.lblWelcome.Name = "lblWelcome";
             this.lblWelcome.Size = new System.Drawing.Size(86, 31);
             this.lblWelcome.TabIndex = 0;
@@ -62,7 +68,7 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(541, 213);
+            this.dataGridView1.Size = new System.Drawing.Size(642, 258);
             this.dataGridView1.TabIndex = 1;
             // 
             // label1
@@ -89,9 +95,9 @@
             // panel1
             // 
             this.panel1.Controls.Add(this.dataGridView1);
-            this.panel1.Location = new System.Drawing.Point(45, 108);
+            this.panel1.Location = new System.Drawing.Point(12, 63);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(541, 213);
+            this.panel1.Size = new System.Drawing.Size(642, 258);
             this.panel1.TabIndex = 5;
             // 
             // panel2
@@ -102,6 +108,23 @@
             this.panel2.Size = new System.Drawing.Size(666, 26);
             this.panel2.TabIndex = 6;
             // 
+            // menuStrip2
+            // 
+            this.menuStrip2.BackColor = System.Drawing.Color.DarkTurquoise;
+            this.menuStrip2.Font = new System.Drawing.Font("Verdana", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))));
+            this.menuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.hakkımızdaToolStripMenuItem,
+            this.randevularımToolStripMenuItem,
+            this.departmanlarToolStripMenuItem,
+            this.doktorlarToolStripMenuItem,
+            this.iletişimToolStripMenuItem,
+            this.sSSToolStripMenuItem});
+            this.menuStrip2.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip2.Name = "menuStrip2";
+            this.menuStrip2.Size = new System.Drawing.Size(666, 26);
+            this.menuStrip2.TabIndex = 0;
+            this.menuStrip2.Text = "menuStrip2";
+            // 
             // hakkımızdaToolStripMenuItem
             // 
             this.hakkımızdaToolStripMenuItem.BackColor = System.Drawing.Color.Pink;
@@ -109,38 +132,43 @@
             this.hakkımızdaToolStripMenuItem.Name = "hakkımızdaToolStripMenuItem";
             this.hakkımızdaToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
             this.hakkımızdaToolStripMenuItem.Text = "Hakkımızda";
-            // 
-            // iletişimToolStripMenuItem
-            // 
-            this.iletişimToolStripMenuItem.BackColor = System.Drawing.Color.Pink;
-            this.iletişimToolStripMenuItem.ForeColor = System.Drawing.Color.DarkBlue;
-            this.iletişimToolStripMenuItem.Name = "iletişimToolStripMenuItem";
-            this.iletişimToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
-            this.iletişimToolStripMenuItem.Text = "Randevularım";
-            // 
-            // doktorlarToolStripMenuItem
-            // 
-            this.doktorlarToolStripMenuItem.BackColor = System.Drawing.Color.Pink;
-            this.doktorlarToolStripMenuItem.ForeColor = System.Drawing.Color.DarkBlue;
-            this.doktorlarToolStripMenuItem.Name = "doktorlarToolStripMenuItem";
-            this.doktorlarToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
-            this.doktorlarToolStripMenuItem.Text = "Departmanlar";
+            this.hakkımızdaToolStripMenuItem.Click += new System.EventHandler(this.hakkımızdaToolStripMenuItem_Click);
             // 
             // randevularımToolStripMenuItem
             // 
             this.randevularımToolStripMenuItem.BackColor = System.Drawing.Color.Pink;
             this.randevularımToolStripMenuItem.ForeColor = System.Drawing.Color.DarkBlue;
             this.randevularımToolStripMenuItem.Name = "randevularımToolStripMenuItem";
-            this.randevularımToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
-            this.randevularımToolStripMenuItem.Text = "Doktorlar";
+            this.randevularımToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.randevularımToolStripMenuItem.Text = "Randevularım";
+            this.randevularımToolStripMenuItem.Click += new System.EventHandler(this.randevularımToolStripMenuItem_Click);
             // 
             // departmanlarToolStripMenuItem
             // 
             this.departmanlarToolStripMenuItem.BackColor = System.Drawing.Color.Pink;
             this.departmanlarToolStripMenuItem.ForeColor = System.Drawing.Color.DarkBlue;
             this.departmanlarToolStripMenuItem.Name = "departmanlarToolStripMenuItem";
-            this.departmanlarToolStripMenuItem.Size = new System.Drawing.Size(83, 22);
-            this.departmanlarToolStripMenuItem.Text = "İletişim";
+            this.departmanlarToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.departmanlarToolStripMenuItem.Text = "Departmanlar";
+            this.departmanlarToolStripMenuItem.Click += new System.EventHandler(this.departmanlarToolStripMenuItem_Click);
+            // 
+            // doktorlarToolStripMenuItem
+            // 
+            this.doktorlarToolStripMenuItem.BackColor = System.Drawing.Color.Pink;
+            this.doktorlarToolStripMenuItem.ForeColor = System.Drawing.Color.DarkBlue;
+            this.doktorlarToolStripMenuItem.Name = "doktorlarToolStripMenuItem";
+            this.doktorlarToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.doktorlarToolStripMenuItem.Text = "Doktorlar";
+            this.doktorlarToolStripMenuItem.Click += new System.EventHandler(this.doktorlarToolStripMenuItem_Click);
+            // 
+            // iletişimToolStripMenuItem
+            // 
+            this.iletişimToolStripMenuItem.BackColor = System.Drawing.Color.Pink;
+            this.iletişimToolStripMenuItem.ForeColor = System.Drawing.Color.DarkBlue;
+            this.iletişimToolStripMenuItem.Name = "iletişimToolStripMenuItem";
+            this.iletişimToolStripMenuItem.Size = new System.Drawing.Size(83, 22);
+            this.iletişimToolStripMenuItem.Text = "İletişim";
+            this.iletişimToolStripMenuItem.Click += new System.EventHandler(this.iletişimToolStripMenuItem_Click);
             // 
             // sSSToolStripMenuItem
             // 
@@ -149,29 +177,53 @@
             this.sSSToolStripMenuItem.Name = "sSSToolStripMenuItem";
             this.sSSToolStripMenuItem.Size = new System.Drawing.Size(65, 22);
             this.sSSToolStripMenuItem.Text = "S.S.S";
+            this.sSSToolStripMenuItem.Click += new System.EventHandler(this.sSSToolStripMenuItem_Click);
             // 
-            // menuStrip2
+            // panel3
             // 
-            this.menuStrip2.BackColor = System.Drawing.Color.DarkTurquoise;
-            this.menuStrip2.Font = new System.Drawing.Font("Verdana", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))));
-            this.menuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.hakkımızdaToolStripMenuItem,
-            this.iletişimToolStripMenuItem,
-            this.doktorlarToolStripMenuItem,
-            this.randevularımToolStripMenuItem,
-            this.departmanlarToolStripMenuItem,
-            this.sSSToolStripMenuItem});
-            this.menuStrip2.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip2.Name = "menuStrip2";
-            this.menuStrip2.Size = new System.Drawing.Size(666, 26);
-            this.menuStrip2.TabIndex = 0;
-            this.menuStrip2.Text = "menuStrip2";
+            this.panel3.Controls.Add(this.panel5);
+            this.panel3.Controls.Add(this.panel4);
+            this.panel3.Location = new System.Drawing.Point(12, 63);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(642, 258);
+            this.panel3.TabIndex = 6;
+            // 
+            // panel5
+            // 
+            this.panel5.Location = new System.Drawing.Point(0, 0);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(642, 258);
+            this.panel5.TabIndex = 6;
+            // 
+            // panel4
+            // 
+            this.panel4.Location = new System.Drawing.Point(0, 3);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(642, 258);
+            this.panel4.TabIndex = 6;
+            // 
+            // panel6
+            // 
+            this.panel6.Location = new System.Drawing.Point(12, 63);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(642, 258);
+            this.panel6.TabIndex = 6;
+            // 
+            // panel7
+            // 
+            this.panel7.Location = new System.Drawing.Point(12, 63);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(642, 258);
+            this.panel7.TabIndex = 6;
             // 
             // MainMenuForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(666, 373);
+            this.Controls.Add(this.panel7);
+            this.Controls.Add(this.panel6);
+            this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label2);
@@ -181,7 +233,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "MainMenuForm";
-            this.Text = "Ana Menü";
+            this.Text = "Online Randevu Sistemi";
             this.Load += new System.EventHandler(this.MainMenuForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel1.ResumeLayout(false);
@@ -189,6 +241,7 @@
             this.panel2.PerformLayout();
             this.menuStrip2.ResumeLayout(false);
             this.menuStrip2.PerformLayout();
+            this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -204,10 +257,15 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.MenuStrip menuStrip2;
         private System.Windows.Forms.ToolStripMenuItem hakkımızdaToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem iletişimToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem doktorlarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem randevularımToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem departmanlarToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem doktorlarToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem iletişimToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sSSToolStripMenuItem;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Panel panel6;
+        private System.Windows.Forms.Panel panel7;
     }
 }

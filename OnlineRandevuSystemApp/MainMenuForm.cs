@@ -17,13 +17,21 @@ namespace OnlineRandevuSystemApp
         private UserModel _user;
         public MainMenuForm(UserModel user)
         {
-            InitializeComponent();
-            this.lblWelcome.Text = $"Hoş Geldiniz, {user.FirstName} {user.LastName}";
             _user = user;
+            InitializeComponent();
+        }
+
+        private void OnStartForm()
+        {
+            UndoMenuEffects();
+            ActiveMenuEffect(hakkımızdaToolStripMenuItem);
+            ToggleOnSelectedPanel(panel3);
+            this.lblWelcome.Text = $"Hoş Geldiniz, {_user.FirstName} {_user.LastName}";
         }
 
         private void MainMenuForm_Load(object sender, EventArgs e)
         {
+            OnStartForm();
             DataTable dataTable = new DataTable();
             UserModel usr2 = new UserModel();
             usr2.Id = 2;
@@ -93,6 +101,92 @@ namespace OnlineRandevuSystemApp
             }
 
             dataGridView1.DataSource = dataTable;
+        }
+
+        private void hakkımızdaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UndoMenuEffects();
+            ActiveMenuEffect(hakkımızdaToolStripMenuItem);
+            ToggleOnSelectedPanel(panel3);
+        }
+
+        private void randevularımToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UndoMenuEffects();
+            ActiveMenuEffect(randevularımToolStripMenuItem);
+            ToggleOnSelectedPanel(panel1);
+        }
+
+        private void departmanlarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UndoMenuEffects();
+            ActiveMenuEffect(departmanlarToolStripMenuItem);
+            ToggleOnSelectedPanel(panel4);
+        }
+
+        private void doktorlarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UndoMenuEffects();
+            ActiveMenuEffect(doktorlarToolStripMenuItem);
+            ToggleOnSelectedPanel(panel5);
+        }
+
+        private void iletişimToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UndoMenuEffects();
+            ActiveMenuEffect(iletişimToolStripMenuItem);
+            ToggleOnSelectedPanel(panel6);
+        }
+
+        private void sSSToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UndoMenuEffects();
+            ActiveMenuEffect(sSSToolStripMenuItem);
+            ToggleOnSelectedPanel(panel7);
+        }
+
+        private void ToggleOnSelectedPanel(Panel panel)
+        {
+            var panelItems = new List<Panel>()
+            {
+                panel1,
+                panel3,
+                panel4,
+                panel5,
+                panel6,
+                panel7
+            };
+
+            foreach (var pnl in panelItems)
+            {
+                pnl.Visible = false;
+            }
+
+            panel.Visible = true;
+        }
+
+        private void ActiveMenuEffect(ToolStripMenuItem menuItem)
+        {
+            menuItem.ForeColor = Color.Red;
+            menuItem.BackColor = Color.Green;
+        }
+
+        private void UndoMenuEffects()
+        {
+            var menuItems = new List<ToolStripMenuItem>()
+            {
+                hakkımızdaToolStripMenuItem,
+                doktorlarToolStripMenuItem,
+                iletişimToolStripMenuItem,
+                departmanlarToolStripMenuItem,
+                randevularımToolStripMenuItem,
+                sSSToolStripMenuItem
+            };
+            foreach (var menu in menuItems)
+            {
+                menu.ForeColor = Color.DarkBlue;
+                menu.BackColor = Color.Pink;
+            }
         }
     }
 }

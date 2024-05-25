@@ -111,9 +111,10 @@
             this.Controls.Add(this.txtEmail);
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.btnGetUsers);
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.MaximizeBox = false;
             this.Name = "LoginForm";
-            this.Text = "Online Randevu Sistemi Giriş Ekranı";
+            this.Text = "Giriş";
             this.ResumeLayout(false);
             this.PerformLayout();
 
