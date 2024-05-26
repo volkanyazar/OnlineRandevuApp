@@ -1,4 +1,6 @@
-﻿using OnlineRandevuSystemApp.Models;
+﻿using Newtonsoft.Json;
+using OnlineRandevuSystemApp.Models;
+using OnlineRandevuSystemApp.Models.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,6 +8,7 @@ using System.Data;
 using System.Data.Common;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -30,76 +33,67 @@ namespace OnlineRandevuSystemApp
         private void MainMenuForm_Load(object sender, EventArgs e)
         {
             OnStartForm();
-            DataTable dataTable = new DataTable();
-            UserModel usr2 = new UserModel();
-            usr2.Id = 2;
-            usr2.FirstName = "ali";
-            usr2.LastName = "dah";
-            usr2.Email = "aliATTTTT";
-            usr2.UserName = "ali";
+        }
 
-            UserModel usr3 = new UserModel();
-
-            usr3.Id = 3;
-            usr3.FirstName = "alivef";
-            usr3.LastName = "dajjh";
-            usr3.Email = "asATTTTT";
-            usr3.UserName = "hhg";
-            UserModel usr4 = new UserModel();
-
-            usr4.Id = 4;
-            usr4.FirstName = "esra";
-            usr4.LastName = "gdd";
-            usr4.Email = "aesraATTTTT";
-            usr4.UserName = "jjh";
-
-            UserModel usr5 = new UserModel();
-
-            usr5.Id = 5;
-            usr5.FirstName = "nata";
-            usr5.LastName = "hggg";
-            usr5.Email = "naasATTTTT";
-            usr5.UserName = "jjjssa";
-
-            List<UserModel> users = new List<UserModel>
+        private void tcOnlineApp_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tcOnlineApp.SelectedTab == pageRandevularim)
             {
-                usr2,
-                usr3,
-                usr4,
-                usr5
-            };
+                LoadRandevuData();
+            }
+        }
 
+        private async void LoadRandevuData()
+        {
+            var randevuInfo = await GetRandevousInfoByUserIdAsync();
+            DataTable dataTable = new DataTable();
 
+            dataTable.Columns.Add("Randevu No", typeof(string)).ReadOnly = true;
+            dataTable.Columns.Add("Randevu Tarihi", typeof(string)).ReadOnly = true;
+            dataTable.Columns.Add("Randevu Saati", typeof(string)).ReadOnly = true;
+            dataTable.Columns.Add("Doktor Adı Soyadı", typeof(string)).ReadOnly = true;
+            dataTable.Columns.Add("Bölüm", typeof(string)).ReadOnly = true;
 
-            dataTable.Columns.Add("Id", typeof(string)).ReadOnly = true;
-            dataTable.Columns.Add("FirstName", typeof(string)).ReadOnly = true;
-            dataTable.Columns.Add("LastName", typeof(string)).ReadOnly = true;
-            dataTable.Columns.Add("Email", typeof(string)).ReadOnly = true;
-            dataTable.Columns.Add("Username", typeof(string)).ReadOnly = true;
-
-            DataRow firstRow = dataTable.NewRow();
-            firstRow["Id"] = _user.Id;
-            firstRow["FirstName"] = _user.FirstName;
-            firstRow["LastName"] = _user.LastName;
-            firstRow["Email"] = _user.Email;
-            firstRow["Username"] = _user.UserName;
-
-            dataTable.Rows.Add(firstRow);
-
-            foreach (var item in users)
+            foreach (var item in randevuInfo?.Data)
             {
                 DataRow row = dataTable.NewRow();
-                row["Id"] = item.Id;
-                row["FirstName"] = item.FirstName;
-                row["LastName"] = item.LastName;
-                row["Email"] = item.Email;
-                row["Username"] = item.UserName;
+                row["Randevu No"] = item.RandevoNo;
+                row["Randevu Tarihi"] = item.RandevuTarihi;
+                row["Randevu Saati"] = item.RandevuSaati;
+                row["Doktor Adı Soyadı"] = item.DoktorAdSoyad;
+                row["Bölüm"] = item.Bolum;
 
                 dataTable.Rows.Add(row);
             }
-            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.DataSource = dataTable;
+        }
+
+        private async Task<BaseResponse<List<RandevousInfoModel>>> GetRandevousInfoByUserIdAsync()
+        {
+            string userUrl = "https://localhost:5001/api/randevous/getByUserId/" + _user.Id;
+
+            var response = new BaseResponse<List<RandevousInfoModel>>();
+
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    string result = await client.GetStringAsync(userUrl);
+                    response = JsonConvert.DeserializeObject<BaseResponse<List<RandevousInfoModel>>>(result);
+
+                    if (response.Data == null || response.Data.Count == 0)
+                    {
+                        MessageBox.Show("Randevu bilgileri veritabanında bulunamadı.", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"API isteği sırasında bir hata oluştu: {ex.Message}", "DİKKAT", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                return response;
+            }
         }
 
         private void ActiveMenuEffect(ToolStripMenuItem menuItem)
