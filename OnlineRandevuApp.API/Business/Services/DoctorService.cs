@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineRandevuApp.API.Business.Interfaces;
-using OnlineRandevuApp.API.Core.Concrete;
 using OnlineRandevuApp.API.Core.Utilities;
 using OnlineRandevuApp.API.DataAccess;
 using OnlineRandevuApp.API.Entities;
@@ -10,26 +9,25 @@ using System.Threading.Tasks;
 
 namespace OnlineRandevuApp.API.Business.Services
 {
-    public class RandevousService : IRandevousService
+    public class DoctorService : IDoctorService
     {
         private readonly OnlineRandevousContext _context;
 
-        public RandevousService(OnlineRandevousContext context)
+        public DoctorService(OnlineRandevousContext context)
         {
             this._context = context;
         }
-
-        public async Task<BaseResponse<List<Randevous>>> GetAll()
+        public async Task<BaseResponse<List<Doctor>>> GetAll()
         {
-            var response = new BaseResponse<List<Randevous>>();
+            var response = new BaseResponse<List<Doctor>>();
 
             try
             {
-                var result = await this._context.Randevous.Include(x => x.User).Include(x => x.Doctor).ThenInclude(x => x.Department).ToListAsync();
+                var result = await this._context.Doctor.Include(x => x.Department).ToListAsync();
 
                 response.Data = result;
                 response.HasError = false;
-                response.SetSuccess("Randevu Bilgileri Başarıyla Getirildi.");
+                response.SetSuccess("Doktor Bilgileri Başarıyla Getirildi.");
             }
             catch (Exception e)
             {

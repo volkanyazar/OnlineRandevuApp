@@ -97,6 +97,7 @@ namespace OnlineRandevuSystemApp
 
                 dataTable.Rows.Add(row);
             }
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
             dataGridView1.DataSource = dataTable;
         }
