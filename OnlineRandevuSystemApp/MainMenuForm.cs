@@ -40,11 +40,11 @@ namespace OnlineRandevuSystemApp
         {
             if (tcOnlineApp.SelectedTab == pageRandevularim)
             {
-                LoadRandevuData();
+                LoadRandevousData();
             }
         }
 
-        private async void LoadRandevuData()
+        private async void LoadRandevousData()
         {
             var randevuInfo = await GetRandevousInfoByUserIdAsync();
             DataTable dataTable = new DataTable();
