@@ -41,6 +41,7 @@
             this.pageIletisim = new System.Windows.Forms.TabPage();
             this.pageSss = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnMakeRandevous = new System.Windows.Forms.Button();
             this.tcOnlineApp.SuspendLayout();
             this.pageHakkimizda.SuspendLayout();
             this.pageRandevularim.SuspendLayout();
@@ -128,6 +129,7 @@
             // pageRandevularim
             // 
             this.pageRandevularim.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pageRandevularim.Controls.Add(this.btnMakeRandevous);
             this.pageRandevularim.Controls.Add(this.dataGridView1);
             this.pageRandevularim.Location = new System.Drawing.Point(4, 25);
             this.pageRandevularim.Name = "pageRandevularim";
@@ -197,6 +199,19 @@
             this.panel1.Size = new System.Drawing.Size(665, 373);
             this.panel1.TabIndex = 8;
             // 
+            // btnMakeRandevous
+            // 
+            this.btnMakeRandevous.BackColor = System.Drawing.Color.Gold;
+            this.btnMakeRandevous.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnMakeRandevous.ForeColor = System.Drawing.Color.Purple;
+            this.btnMakeRandevous.Location = new System.Drawing.Point(521, 190);
+            this.btnMakeRandevous.Name = "btnMakeRandevous";
+            this.btnMakeRandevous.Size = new System.Drawing.Size(120, 23);
+            this.btnMakeRandevous.TabIndex = 1;
+            this.btnMakeRandevous.Text = "RANDEVU YAP";
+            this.btnMakeRandevous.UseVisualStyleBackColor = false;
+            this.btnMakeRandevous.Click += new System.EventHandler(this.btnMakeRandevous_Click);
+            // 
             // MainMenuForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -235,5 +250,6 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TabControl tcOnlineApp;
+        private System.Windows.Forms.Button btnMakeRandevous;
     }
 }

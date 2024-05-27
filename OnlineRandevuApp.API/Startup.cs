@@ -1,20 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using OnlineRandevuApp.API.Business.Interfaces;
 using OnlineRandevuApp.API.Business.Services;
 using OnlineRandevuApp.API.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace OnlineRandevuApp.API
 {
@@ -30,13 +23,14 @@ namespace OnlineRandevuApp.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             services.AddCors();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "OnlineRandevuApp.API", Version = "v1" });
             });
+
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddDbContext<OnlineRandevousContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));

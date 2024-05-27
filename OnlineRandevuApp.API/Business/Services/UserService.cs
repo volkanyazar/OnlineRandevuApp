@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySqlX.XDevAPI.Common;
 using OnlineRandevuApp.API.Business.Interfaces;
 using OnlineRandevuApp.API.Core.Concrete;
 using OnlineRandevuApp.API.Core.Utilities;

@@ -3,16 +3,8 @@ using OnlineRandevuSystemApp.Models;
 using OnlineRandevuSystemApp.Models.Utilities;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using System.Web.Script.Serialization;
 using System.Windows.Forms;
 
 namespace OnlineRandevuSystemApp
@@ -20,6 +12,7 @@ namespace OnlineRandevuSystemApp
     public partial class LoginForm : Form
     {
         private string apiUrl = "https://localhost:5001/api";
+
         public LoginForm()
         {
             InitializeComponent();
@@ -91,7 +84,6 @@ namespace OnlineRandevuSystemApp
                 return response;
             }
         }
-
 
         private async void Login(string email, string password)
         {

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using OnlineRandevuSystemApp.Models;
 using OnlineRandevuSystemApp.Models.Utilities;
+using OnlineRandevuSystemApp.RandevousForms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -119,6 +120,14 @@ namespace OnlineRandevuSystemApp
             //    menu.ForeColor = Color.DarkBlue;
             //    menu.BackColor = Color.Pink;
             //}
+        }
+
+        private void btnMakeRandevous_Click(object sender, EventArgs e)
+        {
+            RandevousAddForm randevousForm = new RandevousAddForm(this._user);
+            randevousForm.FormClosed += (s, args) => this.Show();
+            this.Hide();
+            randevousForm.Show();
         }
     }
 }

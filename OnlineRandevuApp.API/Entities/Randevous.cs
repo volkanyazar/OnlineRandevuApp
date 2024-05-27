@@ -1,8 +1,8 @@
-﻿using System;
+﻿using OnlineRandevuApp.API.Core.Abstract;
+using OnlineRandevuApp.API.Core.Concrete;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using OnlineRandevuApp.API.Core.Abstract;
-using OnlineRandevuApp.API.Core.Concrete;
 
 namespace OnlineRandevuApp.API.Entities
 {
@@ -12,16 +12,17 @@ namespace OnlineRandevuApp.API.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+
         public string Name { get; set; }
         public int UserId { get; set; }
-        public int DoctorId { get; set; }
+        public int DepartmentId { get; set; }
         public DateTime? Date { get; set; }
         public string Hour { get; set; }
 
         [ForeignKey("UserId")]
         public User User { get; set; }
 
-        [ForeignKey("DoctorId")]
-        public Doctor Doctor { get; set; }
+        [ForeignKey("DepartmentId")]
+        public Department Department { get; set; }
     }
 }

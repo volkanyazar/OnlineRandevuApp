@@ -13,10 +13,13 @@ namespace OnlineRandevuApp.API.Controllers
     public class RandevousController : ControllerBase
     {
         private readonly IRandevousService _randevousService;
+
         public RandevousController(IRandevousService randevousService)
         {
             this._randevousService = randevousService;
         }
+
+        #region Get Methods
 
         [HttpGet("getall")]
         public async Task<BaseResponse<List<Randevous>>> GetAll()
@@ -29,5 +32,17 @@ namespace OnlineRandevuApp.API.Controllers
         {
             return await this._randevousService.GetByUserId(userId);
         }
+
+        #endregion Get Methods
+
+        #region Post Methods
+
+        [HttpPost("addRandevousAsync")]
+        public async Task<BaseResponse<Randevous>> AddRandevousAsync([FromBody] Randevous randevous)
+        {
+            return await this._randevousService.AddRandevousAsync(randevous);
+        }
+
+        #endregion Post Methods
     }
 }

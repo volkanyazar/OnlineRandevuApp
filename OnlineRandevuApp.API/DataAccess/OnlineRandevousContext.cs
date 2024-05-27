@@ -1,13 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using OnlineRandevuApp.API.Core.Concrete;
 using OnlineRandevuApp.API.Entities;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OnlineRandevuApp.API.DataAccess
 {
@@ -15,9 +8,12 @@ namespace OnlineRandevuApp.API.DataAccess
     {
         public OnlineRandevousContext()
         {
-
         }
-        public OnlineRandevousContext(DbContextOptions<OnlineRandevousContext> options ) : base(options) { }
+
+        public OnlineRandevousContext(DbContextOptions<OnlineRandevousContext> options) : base(options)
+        {
+        }
+
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
         //    base.OnConfiguring(optionsBuilder);
@@ -29,8 +25,5 @@ namespace OnlineRandevuApp.API.DataAccess
         public DbSet<Randevous> Randevous { get; set; }
         public DbSet<Doctor> Doctor { get; set; }
         public DbSet<Department> Department { get; set; }
-
-
-
     }
 }

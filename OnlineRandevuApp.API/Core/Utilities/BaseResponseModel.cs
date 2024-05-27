@@ -6,11 +6,13 @@ namespace OnlineRandevuApp.API.Core.Utilities
     {
         [JsonProperty(Required = Required.Always)]
         public bool HasError { get; set; }
+
         [JsonProperty(Required = Required.Always)]
         public bool HasWarning { get; set; }
 
         [JsonProperty(Required = Required.Always)]
         public string Message { get; set; }
+
         public long Id { get; set; }
 
         public BaseResponse()
@@ -28,6 +30,7 @@ namespace OnlineRandevuApp.API.Core.Utilities
 
             return this;
         }
+
         public BaseResponse SetWarning(string message = null)
         {
             HasWarning = true;
@@ -45,6 +48,7 @@ namespace OnlineRandevuApp.API.Core.Utilities
 
             return (T)this;
         }
+
         public T SetWarning<T>(string message) where T : BaseResponse
         {
             HasWarning = true;
@@ -60,6 +64,7 @@ namespace OnlineRandevuApp.API.Core.Utilities
             ret.SetError(message);
             return ret;
         }
+
         public static BaseResponse GetWarning(string message)
         {
             var ret = new BaseResponse();
@@ -73,6 +78,7 @@ namespace OnlineRandevuApp.API.Core.Utilities
             ret.SetError(message);
             return ret;
         }
+
         public static T GetWarning<T>(string message) where T : BaseResponse, new()
         {
             var ret = new T();
@@ -111,8 +117,8 @@ namespace OnlineRandevuApp.API.Core.Utilities
             ret.SetSuccess(message);
             return ret;
         }
-
     }
+
     public class BaseResponse<T> : BaseResponse
     {
         public T Data { get; set; }

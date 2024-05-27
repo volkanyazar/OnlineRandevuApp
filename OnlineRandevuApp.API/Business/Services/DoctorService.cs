@@ -17,13 +17,14 @@ namespace OnlineRandevuApp.API.Business.Services
         {
             this._context = context;
         }
+
         public async Task<BaseResponse<List<Doctor>>> GetAll()
         {
             var response = new BaseResponse<List<Doctor>>();
 
             try
             {
-                var result = await this._context.Doctor.Include(x => x.Department).ToListAsync();
+                var result = await this._context.Doctor.ToListAsync();
 
                 response.Data = result;
                 response.HasError = false;

@@ -9,6 +9,9 @@ namespace OnlineRandevuApp.API.Business.Interfaces
     public interface IRandevousService
     {
         Task<BaseResponse<List<Randevous>>> GetAll();
+
         Task<BaseResponse<List<RandevousInfoModel>>> GetByUserId(int userId);
+
+        Task<BaseResponse<Randevous>> AddRandevousAsync(Randevous randevous);
     }
 }
