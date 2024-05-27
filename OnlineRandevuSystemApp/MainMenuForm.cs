@@ -17,6 +17,7 @@ namespace OnlineRandevuSystemApp
 {
     public partial class MainMenuForm : Form
     {
+        private string apiUrl = "https://localhost:5001/api";
         private UserModel _user;
         public MainMenuForm(UserModel user)
         {
@@ -72,7 +73,7 @@ namespace OnlineRandevuSystemApp
 
         private async Task<BaseResponse<List<RandevousInfoModel>>> GetRandevousInfoByUserIdAsync()
         {
-            string userUrl = "https://localhost:5001/api/randevous/getByUserId/" + _user.Id;
+            string userUrl = $"{this.apiUrl}/randevous/getByUserId/" + _user.Id;
 
             var response = new BaseResponse<List<RandevousInfoModel>>();
 

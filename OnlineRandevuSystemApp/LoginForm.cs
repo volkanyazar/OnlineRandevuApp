@@ -19,11 +19,11 @@ namespace OnlineRandevuSystemApp
 {
     public partial class LoginForm : Form
     {
+        private string apiUrl = "https://localhost:5001/api";
         public LoginForm()
         {
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
-            StartWebAPI();
         }
 
         private void LoginForm_Load(object sender, EventArgs e)
@@ -32,7 +32,7 @@ namespace OnlineRandevuSystemApp
 
         private async Task<BaseResponse<List<UserModel>>> GetUsersAsyncAlt()
         {
-            string userUrl = "https://localhost:5001/api/users/getall";
+            string userUrl = $"{this.apiUrl}/users/getall";
 
             var response = new BaseResponse<List<UserModel>>();
 
@@ -68,7 +68,7 @@ namespace OnlineRandevuSystemApp
 
         private async Task<BaseResponse<List<UserModel>>> GetUsersAsync()
         {
-            string userUrl = "https://localhost:5001/api/users/getall";
+            string userUrl = $"{this.apiUrl}/users/getall";
 
             var response = new BaseResponse<List<UserModel>>();
 
@@ -136,30 +136,6 @@ namespace OnlineRandevuSystemApp
             {
                 MessageBox.Show($"Giriş işlemi sırasında hata oluştu: {ex.Message}", "DİKKAT", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-
-        public void StartWebAPI()
-        {
-            string basePath = AppDomain.CurrentDomain.BaseDirectory;
-            string correctedPath = Path.GetFullPath(Path.Combine(basePath, @"..\..\.."));
-
-            string apiRelativePath = @"OnlineRandevuApp.API";
-
-            string apiFullPath = Path.Combine(correctedPath, apiRelativePath);
-            ProcessStartInfo startInfo = new ProcessStartInfo
-            {
-                FileName = "dotnet",
-                Arguments = $"run --project {apiFullPath}",
-                UseShellExecute = true
-            };
-
-            Process webApiProcess = new Process
-            {
-                StartInfo = startInfo
-            };
-
-            webApiProcess.Start();
         }
 
         private async void btnGetUsers_Click(object sender, EventArgs e)
