@@ -31,8 +31,8 @@ namespace OnlineRandevuSystemApp.RandevousForms
                 Date = DateTime.Now,
                 Hour = "13:30",
                 DepartmentId = 2,
-                Name = "Radyoloji",
-                UserId = 2,
+                Name = "Giriş",
+                UserId = this._user.Id,
             };
             await AddRandevousAsync(rndvs);
         }
@@ -61,6 +61,7 @@ namespace OnlineRandevuSystemApp.RandevousForms
                     }
                     else
                     {
+                        this.Close();
                         MessageBox.Show("Randevu başarıyla eklendi.", "BİLGİ", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }

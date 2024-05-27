@@ -125,7 +125,7 @@ namespace OnlineRandevuSystemApp
         private void btnMakeRandevous_Click(object sender, EventArgs e)
         {
             RandevousAddForm randevousForm = new RandevousAddForm(this._user);
-            randevousForm.FormClosed += (s, args) => this.Show();
+            randevousForm.FormClosed += (s, args) => { this.Show(); this.LoadRandevousData(); }; 
             this.Hide();
             randevousForm.Show();
         }
