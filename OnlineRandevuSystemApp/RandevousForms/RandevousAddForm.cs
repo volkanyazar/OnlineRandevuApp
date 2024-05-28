@@ -30,7 +30,7 @@ namespace OnlineRandevuSystemApp.RandevousForms
             {
                 Date = DateTime.Now,
                 Hour = "13:30",
-                DepartmentId = 2,
+                DoctorId = 2,
                 Name = "Giriş",
                 UserId = this._user.Id,
             };

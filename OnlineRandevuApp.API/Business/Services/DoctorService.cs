@@ -24,7 +24,7 @@ namespace OnlineRandevuApp.API.Business.Services
 
             try
             {
-                var result = await this._context.Doctor.ToListAsync();
+                var result = await this._context.Doctor.Include(x => x.Department).ToListAsync();
 
                 response.Data = result;
                 response.HasError = false;

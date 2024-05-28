@@ -11,7 +11,7 @@ namespace OnlineRandevuSystemApp.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public int UserId { get; set; }
-        public int DepartmentId { get; set; }
+        public int DoctorId { get; set; }
         public DateTime? Date { get; set; }
         public string Hour { get; set; }
     }

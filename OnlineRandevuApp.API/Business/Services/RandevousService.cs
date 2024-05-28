@@ -30,7 +30,7 @@ namespace OnlineRandevuApp.API.Business.Services
 
             try
             {
-                var result = await this._context.Randevous.Include(x => x.User).Include(x => x.Department).ThenInclude(x => x.Doctor).ToListAsync();
+                var result = await this._context.Randevous.Include(x => x.User).Include(x => x.Doctor).ThenInclude(x => x.Department).ToListAsync();
 
                 response.Data = result;
                 response.HasError = false;
@@ -53,18 +53,18 @@ namespace OnlineRandevuApp.API.Business.Services
             {
                 var result = await this._context.Randevous
                                     .Include(x => x.User)
-                                    .Include(x => x.Department)
-                                        .ThenInclude(x => x.Doctor)
+                                    .Include(x => x.Doctor)
+                                        .ThenInclude(x => x.Department)
                                     .Where(x => x.UserId == userId).
                                     Select(x => new RandevousInfoModel
                                     {
-                                        Bolum = x.Department.Name,
-                                        DepartmentId = x.DepartmentId,
+                                        Bolum = x.Doctor.Department.Name,
+                                        DoctorId = x.Doctor.Id,
                                         RandevoNo = x.Id.ToString(),
                                         UserId = x.UserId,
                                         RandevuSaati = x.Hour,
                                         RandevuTarihi = x.Date,
-                                        DoktorAdSoyad = x.Department.Doctor.FirstName + " " + x.Department.Doctor.LastName
+                                        DoktorAdSoyad = x.Doctor.FirstName + " " + x.Doctor.LastName
                                     }).ToListAsync();
 
                 response.Data = result;

@@ -15,14 +15,14 @@ namespace OnlineRandevuApp.API.Entities
 
         public string Name { get; set; }
         public int UserId { get; set; }
-        public int DepartmentId { get; set; }
+        public int DoctorId { get; set; }
         public DateTime? Date { get; set; }
         public string Hour { get; set; }
 
         [ForeignKey("UserId")]
         public User User { get; set; }
 
-        [ForeignKey("DepartmentId")]
-        public Department Department { get; set; }
+        [ForeignKey("DoctorId")]
+        public Doctor Doctor { get; set; }
     }
 }
