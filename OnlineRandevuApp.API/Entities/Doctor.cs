@@ -15,7 +15,7 @@ namespace OnlineRandevuApp.API.Entities
         public string TcNo { get; set; }
         public int DepartmentId { get; set; }
 
-        [ForeignKey("DepartmanId")]
+        [ForeignKey("DepartmentId")]
         public Department Department { get; set; }
     }
 }
