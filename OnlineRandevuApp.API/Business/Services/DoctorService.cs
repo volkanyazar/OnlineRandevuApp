@@ -3,8 +3,10 @@ using OnlineRandevuApp.API.Business.Interfaces;
 using OnlineRandevuApp.API.Core.Utilities;
 using OnlineRandevuApp.API.DataAccess;
 using OnlineRandevuApp.API.Entities;
+using OnlineRandevuApp.API.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace OnlineRandevuApp.API.Business.Services
@@ -24,7 +26,39 @@ namespace OnlineRandevuApp.API.Business.Services
 
             try
             {
-                var result = await this._context.Doctor.Include(x => x.Department).ToListAsync();
+                var result = await this._context.Doctor.Include(x => x.Department).ThenInclude(x => x.Hospital).ToListAsync();
+
+                response.Data = result;
+                response.HasError = false;
+                response.SetSuccess("Doktor Bilgileri Başarıyla Getirildi.");
+            }
+            catch (Exception e)
+            {
+                response.Data = null;
+                response.HasError = true;
+                response.SetError($"Veritabanı Hatası - Hata Mesajı : {e.Message}");
+            }
+            return response;
+        }
+
+        public async Task<BaseResponse<List<DoctorInfoModel>>> GetDoctorInfo()
+        {
+            var response = new BaseResponse<List<DoctorInfoModel>>();
+
+            try
+            {
+                var result = await this._context.Doctor
+                                    .Include(x => x.Department).
+                                    Select(x => new DoctorInfoModel
+                                    {
+                                        DepartmentAd = x.Department.Name,
+                                        DepartmentId = x.Department.Id,
+                                        FirstName = x.FirstName,
+                                        LastName = x.LastName,
+                                        SicilNo = x.SicilNo,
+                                        TcNo = x.TcNo,
+                                        Id = x.Id,
+                                    }).ToListAsync();
 
                 response.Data = result;
                 response.HasError = false;

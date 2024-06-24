@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using OnlineRandevuApp.API.DataAccess;
@@ -9,9 +10,10 @@ using OnlineRandevuApp.API.DataAccess;
 namespace OnlineRandevuApp.API.Migrations
 {
     [DbContext(typeof(OnlineRandevousContext))]
-    partial class OnlineRandevousContextModelSnapshot : ModelSnapshot
+    [Migration("20240624173234_initdb8")]
+    partial class initdb8
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,8 +63,6 @@ namespace OnlineRandevuApp.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("HospitalId");
-
                     b.ToTable("Department");
                 });
 
@@ -102,9 +102,6 @@ namespace OnlineRandevuApp.API.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<string>("HospitalCode")
-                        .HasColumnType("text");
-
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
@@ -142,17 +139,6 @@ namespace OnlineRandevuApp.API.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Randevous");
-                });
-
-            modelBuilder.Entity("OnlineRandevuApp.API.Entities.Department", b =>
-                {
-                    b.HasOne("OnlineRandevuApp.API.Entities.Hospital", "Hospital")
-                        .WithMany()
-                        .HasForeignKey("HospitalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Hospital");
                 });
 
             modelBuilder.Entity("OnlineRandevuApp.API.Entities.Doctor", b =>

@@ -30,7 +30,7 @@ namespace OnlineRandevuApp.API.Business.Services
 
             try
             {
-                var result = await this._context.Randevous.Include(x => x.User).Include(x => x.Doctor).ThenInclude(x => x.Department).ToListAsync();
+                var result = await this._context.Randevous.Include(x => x.User).Include(x => x.Doctor).ThenInclude(x => x.Department).ThenInclude(x => x.Hospital).ToListAsync();
 
                 response.Data = result;
                 response.HasError = false;

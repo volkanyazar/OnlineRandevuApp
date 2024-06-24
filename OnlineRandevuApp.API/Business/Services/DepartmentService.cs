@@ -3,8 +3,10 @@ using OnlineRandevuApp.API.Business.Interfaces;
 using OnlineRandevuApp.API.Core.Utilities;
 using OnlineRandevuApp.API.DataAccess;
 using OnlineRandevuApp.API.Entities;
+using OnlineRandevuApp.API.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace OnlineRandevuApp.API.Business.Services
@@ -24,7 +26,28 @@ namespace OnlineRandevuApp.API.Business.Services
 
             try
             {
-                var result = await this._context.Department.ToListAsync();
+                var result = await this._context.Department.Include(x => x.Hospital).ToListAsync();
+
+                response.Data = result;
+                response.HasError = false;
+                response.SetSuccess("Departman Bilgileri Başarıyla Getirildi.");
+            }
+            catch (Exception e)
+            {
+                response.Data = null;
+                response.HasError = true;
+                response.SetError($"Veritabanı Hatası - Hata Mesajı : {e.Message}");
+            }
+            return response;
+        }
+
+        public async Task<BaseResponse<List<DepartmentInfoModel>>> GetDepartmentInfo()
+        {
+            var response = new BaseResponse<List<DepartmentInfoModel>>();
+
+            try
+            {
+                var result = await this._context.Department.Include(x => x.Hospital).Select(x => new DepartmentInfoModel { Id = x.Id, Name = x.Name, HospitalId = x.Hospital.Id, HospitalAd = x.Hospital.Name }).OrderBy(x => x.Name).ToListAsync();
 
                 response.Data = result;
                 response.HasError = false;

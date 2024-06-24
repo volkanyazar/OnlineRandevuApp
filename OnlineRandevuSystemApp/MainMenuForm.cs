@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json;
+using OnlineRandevuApp.API.Entities;
+using OnlineRandevuApp.API.Models;
 using OnlineRandevuSystemApp.Models;
 using OnlineRandevuSystemApp.Models.Utilities;
 using OnlineRandevuSystemApp.RandevousForms;
@@ -43,6 +45,21 @@ namespace OnlineRandevuSystemApp
             {
                 LoadRandevousData();
             }
+
+            if (tcOnlineApp.SelectedTab == pageHastaneler)
+            {
+                LoadHospitalData();
+            }
+
+            if (tcOnlineApp.SelectedTab == pageDepartmanlar)
+            {
+                LoadDepartmentData();
+            }
+
+            if (tcOnlineApp.SelectedTab == pageDoktorlar)
+            {
+                LoadDoctorData();
+            }
         }
 
         private async void LoadRandevousData()
@@ -72,6 +89,78 @@ namespace OnlineRandevuSystemApp
             dataGridView1.DataSource = dataTable;
         }
 
+        private async void LoadDoctorData()
+        {
+            var doctorInfo = await GetDoctorInfoAsync();
+            DataTable dataTable = new DataTable();
+
+            dataTable.Columns.Add("Sicil No", typeof(string)).ReadOnly = true;
+            dataTable.Columns.Add("Doktor Adı", typeof(string)).ReadOnly = true;
+            dataTable.Columns.Add("Doktor Soyadı", typeof(string)).ReadOnly = true;
+            dataTable.Columns.Add("Tc Nosu", typeof(string)).ReadOnly = true;
+            dataTable.Columns.Add("Branşı", typeof(string)).ReadOnly = true;
+
+            foreach (var item in doctorInfo?.Data)
+            {
+                DataRow row = dataTable.NewRow();
+                row["Sicil No"] = item.SicilNo;
+                row["Doktor Adı"] = item.FirstName;
+                row["Doktor Soyadı"] = item.LastName;
+                row["Tc Nosu"] = item.TcNo;
+                row["Branşı"] = item.DepartmentAd;
+
+                dataTable.Rows.Add(row);
+            }
+
+            dataGridView4.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView4.DataSource = dataTable;
+        }
+
+        private async void LoadHospitalData()
+        {
+            var hospitalInfo = await GetHospitalInfoAsync();
+            DataTable dataTable = new DataTable();
+
+            dataTable.Columns.Add("Hastane Kodu", typeof(string)).ReadOnly = true;
+            dataTable.Columns.Add("Hastane Adı", typeof(string)).ReadOnly = true;
+
+            foreach (var item in hospitalInfo?.Data)
+            {
+                DataRow row = dataTable.NewRow();
+                row["Hastane Kodu"] = item.HospitalCode;
+                row["Hastane Adı"] = item.Name;
+
+                dataTable.Rows.Add(row);
+            }
+
+            dataGridView2.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView2.DataSource = dataTable;
+        }
+
+        private async void LoadDepartmentData()
+        {
+            var departmentInfo = await GetDepartmentInfoAsync();
+            DataTable dataTable = new DataTable();
+
+            dataTable.Columns.Add("Departman Id", typeof(string)).ReadOnly = true;
+            dataTable.Columns.Add("Departman Adı", typeof(string)).ReadOnly = true;
+            dataTable.Columns.Add("Departmanın Bağlı Olduğu Hastane", typeof(string)).ReadOnly = true;
+
+
+            foreach (var item in departmentInfo?.Data)
+            {
+                DataRow row = dataTable.NewRow();
+                row["Departman Id"] = item.Id;
+                row["Departman Adı"] = item.Name;
+                row["Departmanın Bağlı Olduğu Hastane"] = item.HospitalAd;
+
+                dataTable.Rows.Add(row);
+            }
+
+            dataGridView3.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView3.DataSource = dataTable;
+        }
+
         private async Task<BaseResponse<List<RandevousInfoModel>>> GetRandevousInfoByUserIdAsync()
         {
             string userUrl = $"{this.apiUrl}/randevous/getByUserId/" + _user.Id;
@@ -88,6 +177,84 @@ namespace OnlineRandevuSystemApp
                     if (response.Data == null || response.Data.Count == 0)
                     {
                         MessageBox.Show("Randevu bilgileri veritabanında bulunamadı.", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"API isteği sırasında bir hata oluştu: {ex.Message}", "DİKKAT", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                return response;
+            }
+        }
+
+        private async Task<BaseResponse<List<DoctorInfoModel>>> GetDoctorInfoAsync()
+        {
+            string doctorUrl = $"{this.apiUrl}/doctor/getDoctorInfo";
+
+            var response = new BaseResponse<List<DoctorInfoModel>>();
+
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    string result = await client.GetStringAsync(doctorUrl);
+                    response = JsonConvert.DeserializeObject<BaseResponse<List<DoctorInfoModel>>>(result);
+
+                    if (response.Data == null || response.Data.Count == 0)
+                    {
+                        MessageBox.Show("Doktor bilgileri veritabanında bulunamadı.", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"API isteği sırasında bir hata oluştu: {ex.Message}", "DİKKAT", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                return response;
+            }
+        }
+
+        private async Task<BaseResponse<List<HospitalModel>>> GetHospitalInfoAsync()
+        {
+            string hospitalUrl = $"{this.apiUrl}/hospital/getAllHospital";
+
+            var response = new BaseResponse<List<HospitalModel>>();
+
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    string result = await client.GetStringAsync(hospitalUrl);
+                    response = JsonConvert.DeserializeObject<BaseResponse<List<HospitalModel>>>(result);
+
+                    if (response.Data == null || response.Data.Count == 0)
+                    {
+                        MessageBox.Show("Hastane bilgileri veritabanında bulunamadı.", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"API isteği sırasında bir hata oluştu: {ex.Message}", "DİKKAT", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                return response;
+            }
+        }
+
+        private async Task<BaseResponse<List<DepartmentInfoModel>>> GetDepartmentInfoAsync()
+        {
+            string departmentUrl = $"{this.apiUrl}/department/getDepartmentInfo";
+
+            var response = new BaseResponse<List<DepartmentInfoModel>>();
+
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    string result = await client.GetStringAsync(departmentUrl);
+                    response = JsonConvert.DeserializeObject<BaseResponse<List<DepartmentInfoModel>>>(result);
+
+                    if (response.Data == null || response.Data.Count == 0)
+                    {
+                        MessageBox.Show("Departman bilgileri veritabanında bulunamadı.", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
                 catch (Exception ex)
@@ -125,9 +292,29 @@ namespace OnlineRandevuSystemApp
         private void btnMakeRandevous_Click(object sender, EventArgs e)
         {
             RandevousAddForm randevousForm = new RandevousAddForm(this._user);
-            randevousForm.FormClosed += (s, args) => { this.Show(); this.LoadRandevousData(); }; 
+            randevousForm.FormClosed += (s, args) => { this.Show(); this.LoadRandevousData(); };
             this.Hide();
             randevousForm.Show();
+        }
+
+        private void pageHastaneler_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pageDepartmanlar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView3_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

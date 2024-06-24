@@ -22,6 +22,7 @@ namespace OnlineRandevuApp.API.DataAccess
         //}
 
         public DbSet<User> User { get; set; }
+        public DbSet<Hospital> Hospital { get; set; }
         public DbSet<Randevous> Randevous { get; set; }
         public DbSet<Doctor> Doctor { get; set; }
         public DbSet<Department> Department { get; set; }

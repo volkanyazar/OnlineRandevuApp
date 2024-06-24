@@ -37,6 +37,10 @@ namespace OnlineRandevuApp.API
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRandevousService, RandevousService>();
+            services.AddScoped<IHospitalService, HospitalService>();
+            services.AddScoped<IDoctorService, DoctorService>();
+            services.AddScoped<IDepartmentService, DepartmentService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

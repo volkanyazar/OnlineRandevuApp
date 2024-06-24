@@ -60,10 +60,13 @@
     <Compile Include="MainMenuForm.Designer.cs">
       <DependentUpon>MainMenuForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\DepartmentInfoModel.cs" />
+    <Compile Include="Models\HospitalModel.cs" />
     <Compile Include="Models\RandevousInfoModel.cs" />
     <Compile Include="Models\RandevousModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\Utilities\BaseResponseModel.cs" />
+    <Compile Include="Models\DoctorInfoModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandevousForms\RandevousAddForm.cs">

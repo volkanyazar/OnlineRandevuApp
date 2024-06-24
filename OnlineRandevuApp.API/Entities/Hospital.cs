@@ -3,16 +3,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OnlineRandevuApp.API.Entities
 {
-    [Table("Department")]
-    public class Department
+    [Table("Hospital")]
+    public class Hospital
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Name { get; set; }
-        public int HospitalId { get; set; }
+        public string HospitalCode { get; set; }
 
-        [ForeignKey("HospitalId")]
-        public Hospital Hospital { get; set; }
     }
 }
