@@ -90,7 +90,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label1.ForeColor = System.Drawing.SystemColors.WindowFrame;
-            this.label1.Location = new System.Drawing.Point(683, 409);
+            this.label1.Location = new System.Drawing.Point(683, 417);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(291, 39);
@@ -101,7 +101,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label2.Location = new System.Drawing.Point(455, 409);
+            this.label2.Location = new System.Drawing.Point(455, 417);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(206, 39);
@@ -128,7 +128,7 @@
             this.tcOnlineApp.Name = "tcOnlineApp";
             this.tcOnlineApp.SelectedIndex = 0;
             this.tcOnlineApp.ShowToolTips = true;
-            this.tcOnlineApp.Size = new System.Drawing.Size(993, 354);
+            this.tcOnlineApp.Size = new System.Drawing.Size(993, 363);
             this.tcOnlineApp.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tcOnlineApp.TabIndex = 7;
             this.tcOnlineApp.SelectedIndexChanged += new System.EventHandler(this.tcOnlineApp_SelectedIndexChanged);
@@ -296,7 +296,7 @@
             this.pageOnlineRandevu.Location = new System.Drawing.Point(4, 29);
             this.pageOnlineRandevu.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pageOnlineRandevu.Name = "pageOnlineRandevu";
-            this.pageOnlineRandevu.Size = new System.Drawing.Size(985, 321);
+            this.pageOnlineRandevu.Size = new System.Drawing.Size(985, 330);
             this.pageOnlineRandevu.TabIndex = 6;
             this.pageOnlineRandevu.Text = "Online Randevu";
             this.pageOnlineRandevu.UseVisualStyleBackColor = true;
@@ -331,7 +331,7 @@
             this.panel1.Location = new System.Drawing.Point(3, 1);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(997, 459);
+            this.panel1.Size = new System.Drawing.Size(997, 468);
             this.panel1.TabIndex = 8;
             // 
             // dateTimePickerRandevousDate
@@ -349,7 +349,7 @@
             this.btnSendRandevous.Enabled = false;
             this.btnSendRandevous.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnSendRandevous.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.btnSendRandevous.Location = new System.Drawing.Point(719, 270);
+            this.btnSendRandevous.Location = new System.Drawing.Point(721, 279);
             this.btnSendRandevous.Margin = new System.Windows.Forms.Padding(4);
             this.btnSendRandevous.Name = "btnSendRandevous";
             this.btnSendRandevous.Size = new System.Drawing.Size(247, 28);
@@ -396,7 +396,7 @@
             this.btnControl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnControl.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.btnControl.Location = new System.Drawing.Point(422, 261);
+            this.btnControl.Location = new System.Drawing.Point(422, 270);
             this.btnControl.Margin = new System.Windows.Forms.Padding(4);
             this.btnControl.Name = "btnControl";
             this.btnControl.Size = new System.Drawing.Size(139, 47);
@@ -471,7 +471,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(999, 459);
+            this.ClientSize = new System.Drawing.Size(999, 471);
             this.Controls.Add(this.panel1);
             this.ForeColor = System.Drawing.SystemColors.MenuHighlight;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;

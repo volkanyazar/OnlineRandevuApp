@@ -378,8 +378,10 @@ namespace OnlineRandevuSystemApp
 
         private void btnSendRandevous_Click(object sender, EventArgs e)
         {
-            DateTime selectedDateTime = dateTimePickerRandevousDate.Value;
-            MessageBox.Show("Seçilen Tarih ve Saat: " + selectedDateTime.ToString());
+            DateTime selectedDate = dateTimePickerRandevousDate.Value;
+            DateTime selectedTime = dateTimePickerRandevousTime.Value;
+
+            MessageBox.Show("Seçilen Tarih: " + selectedDate.Date.ToString() + "\nSeçilen Tarih Saat: " + selectedTime.ToString("HH:mm"));
             btnControl.Enabled = true;
             btnSendRandevous.Enabled = false;
         }

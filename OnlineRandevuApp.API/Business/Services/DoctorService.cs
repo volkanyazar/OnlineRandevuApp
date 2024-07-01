@@ -58,6 +58,10 @@ namespace OnlineRandevuApp.API.Business.Services
                                         SicilNo = x.SicilNo,
                                         TcNo = x.TcNo,
                                         Id = x.Id,
+                                        StartDate = x.StartDate,
+                                        EndDate = x.EndDate,
+                                        StartHour = x.StartHour,
+                                        EndHour = x.EndHour,
                                     }).ToListAsync();
 
                 response.Data = result;
@@ -90,6 +94,10 @@ namespace OnlineRandevuApp.API.Business.Services
                                         SicilNo = x.SicilNo,
                                         TcNo = x.TcNo,
                                         Id = x.Id,
+                                        StartDate = x.StartDate,
+                                        EndDate = x.EndDate,
+                                        StartHour = x.StartHour,
+                                        EndHour = x.EndHour,
                                     }).Where(x => x.DepartmentId == departmentId).ToListAsync();
 
                 response.Data = result;
