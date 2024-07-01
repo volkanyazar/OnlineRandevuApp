@@ -10,6 +10,7 @@ namespace OnlineRandevuApp.API.Models
         public int DoctorId { get; set; }
         public DateTime? RandevuTarihi { get; set; }
         public string RandevuSaati { get; set; }
+        public string Hastane { get; set; }
         public string Bolum { get; set; }
     }
 }

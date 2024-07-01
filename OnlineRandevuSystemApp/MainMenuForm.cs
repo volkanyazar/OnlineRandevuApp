@@ -3,7 +3,6 @@ using OnlineRandevuApp.API.Entities;
 using OnlineRandevuApp.API.Models;
 using OnlineRandevuSystemApp.Models;
 using OnlineRandevuSystemApp.Models.Utilities;
-using OnlineRandevuSystemApp.RandevousForms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -68,6 +67,11 @@ namespace OnlineRandevuSystemApp
                 LoadHospitalComboBoxData();
                 btnSendRandevous.Enabled = false;
             }
+
+            if (tcOnlineApp.SelectedTab == pageIletisim)
+            {
+                this.label10.Text = "Bize Ulaşın\r\nSistemimiz ilgili sorularınız, randevu talepleriniz veya geri bildirimleriniz için bizimle iletişime geçebilirsiniz. Aşağıdaki bilgiler aracılığıyla bize ulaşabilirsiniz.\r\nAdres:\r\nXXXX Ltd. A.Ş\r\nÜniversiteler Mahallesi, Bilkent Caddesi No:1\r\nÇankaya, Ankara\r\nTelefon:\r\nRandevu: 0555 555 55 55\r\nGenel Bilgi: 0312 222 22 22\r\nE-posta:\r\ninfo@xxxxx.com.tr\r\nÇalışma Saatleri:\r\nPazartesi - Cuma: 08:00 - 17:00\r\nCumartesi: 09:00 - 13:00\r\nPazar: Kapalı\r\nOnline Randevu Alma\r\nOnline randevu almak için lütfen Online Randevu sayfasına gidin ve formu doldurun. Randevu talepleriniz en kısa sürede işleme alınacaktır.";
+            }
         }
 
         private async void LoadRandevousData()
@@ -79,15 +83,17 @@ namespace OnlineRandevuSystemApp
             dataTable.Columns.Add("Randevu Tarihi", typeof(string)).ReadOnly = true;
             dataTable.Columns.Add("Randevu Saati", typeof(string)).ReadOnly = true;
             dataTable.Columns.Add("Doktor Adı Soyadı", typeof(string)).ReadOnly = true;
+            dataTable.Columns.Add("Hastane", typeof(string)).ReadOnly = true;
             dataTable.Columns.Add("Bölüm", typeof(string)).ReadOnly = true;
 
             foreach (var item in randevuInfo?.Data)
             {
                 DataRow row = dataTable.NewRow();
                 row["Randevu No"] = item.RandevoNo;
-                row["Randevu Tarihi"] = item.RandevuTarihi;
+                row["Randevu Tarihi"] = item.RandevuTarihi.Value.ToString("MM/dd/yyyy");
                 row["Randevu Saati"] = item.RandevuSaati;
                 row["Doktor Adı Soyadı"] = item.DoktorAdSoyad;
+                row["Hastane"] = item.Hastane;
                 row["Bölüm"] = item.Bolum;
 
                 dataTable.Rows.Add(row);
@@ -324,66 +330,25 @@ namespace OnlineRandevuSystemApp
             }
         }
 
-        private void ActiveMenuEffect(ToolStripMenuItem menuItem)
+        private void ResetForm()
         {
-            menuItem.ForeColor = Color.Red;
-            menuItem.BackColor = Color.Green;
-        }
-
-        private void UndoMenuEffects()
-        {
-            //var menuItems = new List<ToolStripMenuItem>()
-            //{
-            //    hakkımızdaToolStripMenuItem,
-            //    doktorlarToolStripMenuItem,
-            //    iletişimToolStripMenuItem,
-            //    departmanlarToolStripMenuItem,
-            //    randevularımToolStripMenuItem,
-            //    sSSToolStripMenuItem
-            //};
-            //foreach (var menu in menuItems)
-            //{
-            //    menu.ForeColor = Color.DarkBlue;
-            //    menu.BackColor = Color.Pink;
-            //}
-        }
-
-        private void btnMakeRandevous_Click(object sender, EventArgs e)
-        {
-            RandevousAddForm randevousForm = new RandevousAddForm(this._user);
-            randevousForm.FormClosed += (s, args) => { this.Show(); this.LoadRandevousData(); };
-            this.Hide();
-            randevousForm.Show();
-        }
-
-        private void pageHastaneler_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void pageDepartmanlar_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void dataGridView3_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-        }
-
-        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void btnSendRandevous_Click(object sender, EventArgs e)
-        {
-            DateTime selectedDate = dateTimePickerRandevousDate.Value;
-            DateTime selectedTime = dateTimePickerRandevousTime.Value;
-
-            MessageBox.Show("Seçilen Tarih: " + selectedDate.Date.ToString() + "\nSeçilen Tarih Saat: " + selectedTime.ToString("HH:mm"));
             btnControl.Enabled = true;
+            btnControl.Visible = true;
+            btnVazgec.Enabled = false;
+            btnVazgec.Visible = false;
             btnSendRandevous.Enabled = false;
+            richTextBox1.Text = string.Empty;
+            comboBoxDoctor.SelectedIndex = -1;
+            comboBoxDoctor.Text = string.Empty;
+            comboBoxDoctor.Items.Clear();
+
+            comboBoxDepartment.SelectedIndex = -1;
+            comboBoxDepartment.Text = string.Empty;
+            comboBoxDepartment.Items.Clear();
+            comboBoxHospital.Text = string.Empty;
+
+            dateTimePickerRandevousDate.Value = new DateTime(1753, 1, 1);
+            dateTimePickerRandevousTime.Value = new DateTime(2024, 1, 1, 0, 0, 0);
         }
 
         private async void LoadHospitalComboBoxData()
@@ -423,8 +388,6 @@ namespace OnlineRandevuSystemApp
             if (comboBoxHospital.SelectedItem is KeyValuePair<int, string> selectedHospital)
             {
                 int selectedHospitalId = selectedHospital.Key;
-                comboBoxDoctor.Items.Clear();
-                comboBoxDepartment.Items.Clear();
 
                 comboBoxDoctor.SelectedIndex = -1;
                 comboBoxDoctor.Text = string.Empty;
@@ -453,11 +416,44 @@ namespace OnlineRandevuSystemApp
             comboBoxDoctor.ValueMember = "Key";
         }
 
-        private void btnControl_Click(object sender, EventArgs e)
+        private async void btnControl_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Onaylandı", "BAŞARILI", MessageBoxButtons.OK);
-            btnSendRandevous.Enabled = true;
-            btnControl.Enabled = false;
+            if (comboBoxDepartment.SelectedItem is KeyValuePair<int, string> selectedDepartment)
+            {
+                var doctorInfo = await GetDoctorInfoByDepartmentIdAsync(selectedDepartment.Key);
+                var dtpDate = dateTimePickerRandevousDate.Value.Date;
+                var dtpTime = dateTimePickerRandevousTime.Value.TimeOfDay;
+
+                foreach (var item in doctorInfo?.Data)
+                {
+                    if (item.StartDate.HasValue && item.StartHour.HasValue && item.EndHour.HasValue)
+                    {
+                        var itemStartDate = item.StartDate.Value.Date;
+                        var itemEndDate = item.EndDate.Value.Date;
+                        var itemStartTime = item.StartHour.Value.TimeOfDay;
+                        var itemEndTime = item.EndHour.Value.TimeOfDay;
+
+                        if ((dtpDate >= itemStartDate && dtpDate <= itemEndDate) && (dtpTime >= itemStartTime && dtpTime <= itemEndTime))
+                        {
+                            richTextBox1.Text += $"{item.SicilNo}    {item.FirstName}    {item.LastName}\n";
+                        }
+                    }
+                }
+            }
+
+            if (!string.IsNullOrEmpty(richTextBox1.Text))
+            {
+                MessageBox.Show("Randevu için ön kontrol başarılı: Randdevu talebinizi oluşturabilirsiniz...", "BAŞARILI", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                btnSendRandevous.Enabled = true;
+                btnControl.Enabled = false;
+                btnControl.Visible = false;
+                btnVazgec.Enabled = true;
+                btnVazgec.Visible = true;
+            }
+            else
+            {
+                MessageBox.Show("İlgili tarih ve saat aralığında randevu alınabilecek uygun doktor bulunmamaktadır...", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private async void comboBoxDepartment_SelectedIndexChanged(object sender, EventArgs e)
@@ -471,6 +467,76 @@ namespace OnlineRandevuSystemApp
                 comboBoxDoctor.Items.Clear();
 
                 await LoadDoctorComboBoxData(selectedDepartmentId);
+            }
+        }
+
+        private async Task<BaseResponse<RandevousModel>> AddRandevousAsync(RandevousModel randevousModel)
+        {
+            string apiUrl = $"{this.apiUrl}/randevous/addRandevousAsync";
+
+            var response = new BaseResponse<RandevousModel>();
+
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    var json = JsonConvert.SerializeObject(randevousModel);
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    var result = await client.PostAsync(apiUrl, content);
+                    var resultContent = await result.Content.ReadAsStringAsync();
+
+                    response = JsonConvert.DeserializeObject<BaseResponse<RandevousModel>>(resultContent);
+
+                    if (response.Data == null)
+                    {
+                        MessageBox.Show("Randevu ekleneme işlemi başarısız.", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else
+                    {
+                        this.tcOnlineApp.SelectedTab = pageRandevularim;
+                        MessageBox.Show("Randevu başarıyla eklendi.", "BİLGİ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"API isteği sırasında bir hata oluştu: {ex.Message}", "DİKKAT", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                return response;
+            }
+        }
+
+        private void btnVazgec_Click(object sender, EventArgs e)
+        {
+            ResetForm();
+            this.btnVazgec.Enabled = false;
+            this.btnVazgec.Visible = false;
+            this.btnSendRandevous.Enabled = false;
+            this.btnControl.Enabled = true;
+            this.btnControl.Visible = true;
+        }
+
+        private async void btnMakeRandevous_Click(object sender, EventArgs e)
+        {
+            if (comboBoxDoctor.SelectedItem is KeyValuePair<int, string> selectedDoctor)
+            {
+                DateTime selectedDate = dateTimePickerRandevousDate.Value;
+                DateTime selectedTime = dateTimePickerRandevousTime.Value;
+
+                RandevousModel rndvs = new RandevousModel()
+                {
+                    Date = selectedDate,
+                    Hour = selectedTime.ToString("HH:mm"),
+                    DoctorId = selectedDoctor.Key,
+                    Name = "GENEL MUAYENE",
+                    UserId = this._user.Id,
+                };
+                await AddRandevousAsync(rndvs);
+                ResetForm();
+            }
+            else
+            {
+                MessageBox.Show("Doktor Bilgileri Hatalı Tekrar Deneyiniz...", "DİKKAT", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
