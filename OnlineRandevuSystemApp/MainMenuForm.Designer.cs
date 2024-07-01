@@ -315,6 +315,7 @@
             // 
             // richTextBox1
             // 
+            this.richTextBox1.Enabled = false;
             this.richTextBox1.Location = new System.Drawing.Point(13, 68);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new System.Drawing.Size(385, 217);
@@ -437,6 +438,8 @@
             // 
             // comboBoxDepartment
             // 
+            this.comboBoxDepartment.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.comboBoxDepartment.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBoxDepartment.FormattingEnabled = true;
             this.comboBoxDepartment.Location = new System.Drawing.Point(597, 82);
             this.comboBoxDepartment.Name = "comboBoxDepartment";
@@ -446,6 +449,8 @@
             // 
             // comboBoxDoctor
             // 
+            this.comboBoxDoctor.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.comboBoxDoctor.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBoxDoctor.FormattingEnabled = true;
             this.comboBoxDoctor.Location = new System.Drawing.Point(598, 228);
             this.comboBoxDoctor.Name = "comboBoxDoctor";
