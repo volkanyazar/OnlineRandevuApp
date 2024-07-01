@@ -72,5 +72,37 @@ namespace OnlineRandevuApp.API.Business.Services
             }
             return response;
         }
+
+        public async Task<BaseResponse<List<DoctorInfoModel>>> GetDoctorInfoByDepartmentId(int departmentId)
+        {
+            var response = new BaseResponse<List<DoctorInfoModel>>();
+
+            try
+            {
+                var result = await this._context.Doctor
+                                    .Include(x => x.Department).
+                                    Select(x => new DoctorInfoModel
+                                    {
+                                        DepartmentAd = x.Department.Name,
+                                        DepartmentId = x.Department.Id,
+                                        FirstName = x.FirstName,
+                                        LastName = x.LastName,
+                                        SicilNo = x.SicilNo,
+                                        TcNo = x.TcNo,
+                                        Id = x.Id,
+                                    }).Where(x => x.DepartmentId == departmentId).ToListAsync();
+
+                response.Data = result;
+                response.HasError = false;
+                response.SetSuccess("Doktor Bilgileri Başarıyla Getirildi.");
+            }
+            catch (Exception e)
+            {
+                response.Data = null;
+                response.HasError = true;
+                response.SetError($"Veritabanı Hatası - Hata Mesajı : {e.Message}");
+            }
+            return response;
+        }
     }
 }

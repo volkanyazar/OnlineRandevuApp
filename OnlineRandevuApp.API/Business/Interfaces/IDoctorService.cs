@@ -9,6 +9,9 @@ namespace OnlineRandevuApp.API.Business.Interfaces
     public interface IDoctorService
     {
         Task<BaseResponse<List<Doctor>>> GetAll();
+
         Task<BaseResponse<List<DoctorInfoModel>>> GetDoctorInfo();
+
+        Task<BaseResponse<List<DoctorInfoModel>>> GetDoctorInfoByDepartmentId(int departmentId);
     }
 }

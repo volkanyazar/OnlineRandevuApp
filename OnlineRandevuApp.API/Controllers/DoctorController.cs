@@ -28,6 +28,12 @@ namespace OnlineRandevuApp.API.Controllers
             return await this._doctorService.GetDoctorInfo();
         }
 
-        #endregion
+        [HttpGet("getDoctorInfoByDepartmentId/{departmentId}")]
+        public async Task<BaseResponse<List<DoctorInfoModel>>> GetDoctorInfoByDepartmentId(int departmentId)
+        {
+            return await this._doctorService.GetDoctorInfoByDepartmentId(departmentId);
+        }
+
+        #endregion Get Methods
     }
 }

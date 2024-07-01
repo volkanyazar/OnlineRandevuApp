@@ -15,6 +15,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace OnlineRandevuSystemApp
 {
@@ -22,6 +23,7 @@ namespace OnlineRandevuSystemApp
     {
         private string apiUrl = "https://localhost:5001/api";
         private UserModel _user;
+
         public MainMenuForm(UserModel user)
         {
             _user = user;
@@ -31,7 +33,7 @@ namespace OnlineRandevuSystemApp
         private void OnStartForm()
         {
             this.lblWelcome.Text = $"Hoş Geldiniz, {_user.FirstName} {_user.LastName}";
-            this.label3.Text = "Lorem Ipsum is simply dummy text of the \nprinting and typesetting industry. \nLorem Ipsum has been the industry's standard \ndummy text ever since the 1500s, \nwhen an unknown printer took a galley of type and scrambled it to make a type specimen book. \nIt has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. \nIt was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, \nand more recently with desktop \npublishing software like Aldus PageMaker \nincluding versions of Lorem Ipsum";
+            this.label3.Text = "Misyonumuz\r\nBiz, Sistem Yönetimi olarak, kullanıcılarımıza en hızlı ve en güvenilir online randevu hizmetini sunmayı hedefliyoruz. Gelişen teknoloji ile birlikte sağlık, güzellik, danışmanlık gibi çeşitli sektörlerde randevu almayı daha kolay ve erişilebilir hale getirmek için çalışıyoruz. Misyonumuz, kullanıcılarımızın hayatını kolaylaştırmak ve zamanlarını daha verimli kullanmalarını sağlamak.\r\n\r\nVizyonumuz\r\nVizyonumuz, online randevu sistemleri arasında lider konuma gelerek, dünya genelinde milyonlarca kullanıcının ilk tercihi olmaktır. Yenilikçi çözümlerimiz ve kullanıcı odaklı yaklaşımımızla, sektördeki en ileri teknolojileri sunmayı hedefliyoruz.\r\n\r\nDeğerlerimiz\r\nGüvenilirlik: Kullanıcılarımızın bilgilerini güvenli bir şekilde saklayarak, randevu süreçlerinin sorunsuz ve güvenli bir şekilde işlemesini sağlıyoruz.\r\n\r\nKullanıcı Odaklılık: Kullanıcı deneyimini ön planda tutarak, herkesin kolayca kullanabileceği, anlaşılır ve etkili bir platform sunuyoruz.\r\nYenilikçilik: Sürekli gelişen teknolojiye ayak uydurarak, kullanıcılarımıza en yeni ve en etkili çözümleri sunmak için çalışıyoruz.\r\nMüşteri Memnuniyeti: Kullanıcılarımızın ihtiyaçlarını ve geri bildirimlerini dikkate alarak, hizmetlerimizi sürekli olarak geliştiriyoruz.";
         }
 
         private void MainMenuForm_Load(object sender, EventArgs e)
@@ -59,6 +61,12 @@ namespace OnlineRandevuSystemApp
             if (tcOnlineApp.SelectedTab == pageDoktorlar)
             {
                 LoadDoctorData();
+            }
+
+            if (tcOnlineApp.SelectedTab == pageOnlineRandevu)
+            {
+                LoadHospitalComboBoxData();
+                btnSendRandevous.Enabled = false;
             }
         }
 
@@ -145,7 +153,6 @@ namespace OnlineRandevuSystemApp
             dataTable.Columns.Add("Departman Id", typeof(string)).ReadOnly = true;
             dataTable.Columns.Add("Departman Adı", typeof(string)).ReadOnly = true;
             dataTable.Columns.Add("Departmanın Bağlı Olduğu Hastane", typeof(string)).ReadOnly = true;
-
 
             foreach (var item in departmentInfo?.Data)
             {
@@ -265,6 +272,58 @@ namespace OnlineRandevuSystemApp
             }
         }
 
+        private async Task<BaseResponse<List<DepartmentInfoModel>>> GetDepartmentInfoByHospitalIdAsync(int hospitalId)
+        {
+            string departmentUrl = $"{this.apiUrl}/department/getDepartmentInfoByHospitalId/" + hospitalId;
+
+            var response = new BaseResponse<List<DepartmentInfoModel>>();
+
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    string result = await client.GetStringAsync(departmentUrl);
+                    response = JsonConvert.DeserializeObject<BaseResponse<List<DepartmentInfoModel>>>(result);
+
+                    if (response.Data == null || response.Data.Count == 0)
+                    {
+                        MessageBox.Show("Departman bilgileri veritabanında bulunamadı.", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"API isteği sırasında bir hata oluştu: {ex.Message}", "DİKKAT", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                return response;
+            }
+        }
+
+        private async Task<BaseResponse<List<DoctorInfoModel>>> GetDoctorInfoByDepartmentIdAsync(int departmentId)
+        {
+            string doctorUrl = $"{this.apiUrl}/doctor/getDoctorInfoByDepartmentId/" + departmentId;
+
+            var response = new BaseResponse<List<DoctorInfoModel>>();
+
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    string result = await client.GetStringAsync(doctorUrl);
+                    response = JsonConvert.DeserializeObject<BaseResponse<List<DoctorInfoModel>>>(result);
+
+                    if (response.Data == null || response.Data.Count == 0)
+                    {
+                        MessageBox.Show("Doktor bilgileri veritabanında bulunamadı.", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"API isteği sırasında bir hata oluştu: {ex.Message}", "DİKKAT", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                return response;
+            }
+        }
+
         private void ActiveMenuEffect(ToolStripMenuItem menuItem)
         {
             menuItem.ForeColor = Color.Red;
@@ -299,22 +358,118 @@ namespace OnlineRandevuSystemApp
 
         private void pageHastaneler_Click(object sender, EventArgs e)
         {
-
         }
 
         private void pageDepartmanlar_Click(object sender, EventArgs e)
         {
-
         }
 
         private void dataGridView3_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+        }
 
+        private void label4_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void btnSendRandevous_Click(object sender, EventArgs e)
+        {
+            DateTime selectedDateTime = dateTimePickerRandevousDate.Value;
+            MessageBox.Show("Seçilen Tarih ve Saat: " + selectedDateTime.ToString());
+            btnControl.Enabled = true;
+            btnSendRandevous.Enabled = false;
+        }
+
+        private async void LoadHospitalComboBoxData()
+        {
+            var hospitalInfo = await GetHospitalInfoAsync();
+
+            foreach (var item in hospitalInfo?.Data)
+            {
+                comboBoxHospital.Items.Add(new KeyValuePair<int, string>(item.Id, item.Name));
+            }
+
+            comboBoxHospital.DisplayMember = "Value";
+            comboBoxHospital.ValueMember = "Key";
+
+            comboBoxHospital.SelectedIndexChanged += comboBoxHospital_SelectedIndexChanged;
+        }
+
+        private async Task LoadDepartmentComboBoxData(int hospitalId)
+        {
+            var departmentInfo = await GetDepartmentInfoByHospitalIdAsync(hospitalId);
+
+            comboBoxDepartment.Items.Clear();
+
+            foreach (var item in departmentInfo?.Data)
+            {
+                comboBoxDepartment.Items.Add(new KeyValuePair<int, string>(item.Id, item.Name));
+            }
+
+            comboBoxDepartment.DisplayMember = "Value";
+            comboBoxDepartment.ValueMember = "Key";
+
+            comboBoxDepartment.SelectedIndexChanged += comboBoxDepartment_SelectedIndexChanged;
+        }
+
+        private async void comboBoxHospital_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBoxHospital.SelectedItem is KeyValuePair<int, string> selectedHospital)
+            {
+                int selectedHospitalId = selectedHospital.Key;
+                comboBoxDoctor.Items.Clear();
+                comboBoxDepartment.Items.Clear();
+
+                comboBoxDoctor.SelectedIndex = -1;
+                comboBoxDoctor.Text = string.Empty;
+                comboBoxDoctor.Items.Clear();
+
+                comboBoxDepartment.SelectedIndex = -1;
+                comboBoxDepartment.Text = string.Empty;
+                comboBoxDepartment.Items.Clear();
+
+                await LoadDepartmentComboBoxData(selectedHospitalId);
+            }
+        }
+
+        private async Task LoadDoctorComboBoxData(int departmentId)
+        {
+            var doctorInfo = await GetDoctorInfoByDepartmentIdAsync(departmentId);
+
+            comboBoxDoctor.Items.Clear();
+
+            foreach (var item in doctorInfo?.Data)
+            {
+                comboBoxDoctor.Items.Add(new KeyValuePair<int, string>(item.Id, item.FirstName + " " + item.LastName));
+            }
+
+            comboBoxDoctor.DisplayMember = "Value";
+            comboBoxDoctor.ValueMember = "Key";
+        }
+
+        private void btnControl_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Onaylandı", "BAŞARILI", MessageBoxButtons.OK);
+            btnSendRandevous.Enabled = true;
+            btnControl.Enabled = false;
+        }
+
+        private async void comboBoxDepartment_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBoxDepartment.SelectedItem is KeyValuePair<int, string> selectedDepartment)
+            {
+                int selectedDepartmentId = selectedDepartment.Key;
+
+                comboBoxDoctor.SelectedIndex = -1;
+                comboBoxDoctor.Text = string.Empty;
+                comboBoxDoctor.Items.Clear();
+
+                await LoadDoctorComboBoxData(selectedDepartmentId);
+            }
         }
     }
 }

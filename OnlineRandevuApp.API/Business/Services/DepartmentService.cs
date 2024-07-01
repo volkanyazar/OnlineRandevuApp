@@ -41,6 +41,27 @@ namespace OnlineRandevuApp.API.Business.Services
             return response;
         }
 
+        public async Task<BaseResponse<List<DepartmentInfoModel>>> GetDepartmentInfoByHospitalId(int hospitalId)
+        {
+            var response = new BaseResponse<List<DepartmentInfoModel>>();
+
+            try
+            {
+                var result = await this._context.Department.Include(x => x.Hospital).Select(x => new DepartmentInfoModel { Id = x.Id, Name = x.Name, HospitalId = x.Hospital.Id, HospitalAd = x.Hospital.Name }).OrderBy(x => x.Name).Where(x => x.HospitalId == hospitalId).ToListAsync();
+
+                response.Data = result;
+                response.HasError = false;
+                response.SetSuccess("Departman Bilgileri Başarıyla Getirildi.");
+            }
+            catch (Exception e)
+            {
+                response.Data = null;
+                response.HasError = true;
+                response.SetError($"Veritabanı Hatası - Hata Mesajı : {e.Message}");
+            }
+            return response;
+        }
+
         public async Task<BaseResponse<List<DepartmentInfoModel>>> GetDepartmentInfo()
         {
             var response = new BaseResponse<List<DepartmentInfoModel>>();
