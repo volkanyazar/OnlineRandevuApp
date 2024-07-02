@@ -13,5 +13,7 @@ namespace OnlineRandevuApp.API.Business.Interfaces
         Task<BaseResponse<List<DoctorInfoModel>>> GetDoctorInfo();
 
         Task<BaseResponse<List<DoctorInfoModel>>> GetDoctorInfoByDepartmentId(int departmentId);
+
+        Task<BaseResponse<DoctorInfoModel>> GetDoctorInfoById(int doctorId);
     }
 }

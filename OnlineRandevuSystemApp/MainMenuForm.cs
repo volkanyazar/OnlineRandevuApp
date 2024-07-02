@@ -64,6 +64,9 @@ namespace OnlineRandevuSystemApp
 
             if (tcOnlineApp.SelectedTab == pageOnlineRandevu)
             {
+                comboBoxHospital.SelectedIndex = -1;
+                comboBoxHospital.Text = string.Empty;
+                comboBoxHospital.Items.Clear();
                 LoadHospitalComboBoxData();
                 btnSendRandevous.Enabled = false;
             }
@@ -330,6 +333,32 @@ namespace OnlineRandevuSystemApp
             }
         }
 
+        private async Task<BaseResponse<DoctorInfoModel>> GetDoctorInfoByIdAsync(int doctorId)
+        {
+            string doctorUrl = $"{this.apiUrl}/doctor/getDoctorInfoById/" + doctorId;
+
+            var response = new BaseResponse<DoctorInfoModel>();
+
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    string result = await client.GetStringAsync(doctorUrl);
+                    response = JsonConvert.DeserializeObject<BaseResponse<DoctorInfoModel>>(result);
+
+                    if (response.Data == null)
+                    {
+                        MessageBox.Show("Doktor bilgileri veritabanında bulunamadı.", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"API isteği sırasında bir hata oluştu: {ex.Message}", "DİKKAT", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                return response;
+            }
+        }
+
         private void ResetForm()
         {
             btnControl.Enabled = true;
@@ -520,19 +549,35 @@ namespace OnlineRandevuSystemApp
         {
             if (comboBoxDoctor.SelectedItem is KeyValuePair<int, string> selectedDoctor)
             {
+                var doctorInfo = await GetDoctorInfoByIdAsync(selectedDoctor.Key);
                 DateTime selectedDate = dateTimePickerRandevousDate.Value;
                 DateTime selectedTime = dateTimePickerRandevousTime.Value;
 
-                RandevousModel rndvs = new RandevousModel()
+                if (doctorInfo.Data.StartDate.HasValue && doctorInfo.Data.StartHour.HasValue && doctorInfo.Data.EndHour.HasValue)
                 {
-                    Date = selectedDate,
-                    Hour = selectedTime.ToString("HH:mm"),
-                    DoctorId = selectedDoctor.Key,
-                    Name = "GENEL MUAYENE",
-                    UserId = this._user.Id,
-                };
-                await AddRandevousAsync(rndvs);
-                ResetForm();
+                    var itemStartDate = doctorInfo.Data.StartDate.Value.Date;
+                    var itemEndDate = doctorInfo.Data.EndDate.Value.Date;
+                    var itemStartTime = doctorInfo.Data.StartHour.Value.TimeOfDay;
+                    var itemEndTime = doctorInfo.Data.EndHour.Value.TimeOfDay;
+
+                    if ((selectedDate.Date >= itemStartDate && selectedDate.Date <= itemEndDate) && (selectedTime.TimeOfDay >= itemStartTime && selectedTime.TimeOfDay <= itemEndTime))
+                    {
+                        RandevousModel rndvs = new RandevousModel()
+                        {
+                            Date = selectedDate,
+                            Hour = selectedTime.ToString("HH:mm"),
+                            DoctorId = selectedDoctor.Key,
+                            Name = "GENEL MUAYENE",
+                            UserId = this._user.Id,
+                        };
+                        await AddRandevousAsync(rndvs);
+                        ResetForm();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Seçtiğiniz doktora ait seçtiğiniz tarih ve saat aralığında doktorunuz randevu vermemektedir. Tekrar Deneyiniz...", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
             }
             else
             {
